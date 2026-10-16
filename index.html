@@ -3,23 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rostrum — Train the argument</title>
+<title>Flowed — Train the argument</title>
+<script>try{if(sessionStorage.getItem("flowed.intro")){document.documentElement.classList.add("seen")}else{sessionStorage.setItem("flowed.intro","1")}}catch(e){document.documentElement.classList.add("seen")}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add("js")</script>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <div class="bar-wrap">
   <div class="bar">
-    <a class="brand" href="#home">Rostrum<i>.</i></a>
+    <a class="brand" href="#home" aria-label="Flowed home">
+      <svg class="wordmark" viewBox="0 0 100 40" aria-hidden="true"><text x="0" y="30">Flowed</text></svg>
+    </a>
     <nav id="tabs">
       <a href="#home" data-tab="home" aria-current="page">Home</a>
       <a href="#how" data-tab="how">How it works</a>
       <a href="#page-briefs" data-tab="page-briefs">Briefs</a>
       <a href="#coaches" data-tab="coaches">Coaches</a>
-      <a href="#">Sign in</a>
+      <a href="#pricing" data-tab="pricing">Pricing</a>
+      <a href="about.html">About Us</a>
+      <a href="signin.html">Sign in</a>
     </nav>
   </div>
 </div>
@@ -27,51 +33,57 @@
 <div class="page" id="home">
 <!-- Hero -->
 <div class="wrap">
-  <section class="hero">
-    <svg class="deco scribble" viewBox="0 0 190 90" aria-hidden="true"><path pathLength="1" d="M8 70 C40 10 120 5 150 35 S110 85 70 60 S60 15 120 18 S185 50 178 78" fill="none" stroke="#0B0B0C" stroke-width="2.4" stroke-linecap="round"/></svg>
-    <p class="deco hand" aria-hidden="true">Welcome to Round 1!</p>
-
-    <div>
-      <div class="kicker">AI debate training</div>
+  <section class="hero hero-home">
+    <div class="intro">
+      <p class="hand" aria-hidden="true">Welcome to Round 1!</p>
+      <div class="kicker">AI speech &amp; debate training</div>
       <h1>Win the room <em>before</em> you enter it.</h1>
-      <p class="lede">Spar against an opponent that argues the hard side of any motion, flags every weak warrant, and scores your rebuttals the way a judge would.</p>
+      <p class="lede">Flowed is an AI coach for competitive speech and debate. Practice live rounds, build cited briefs, and track your progress, whether you compete in interp, oratory, extemp, or any debate format, from Public Forum to Congress.</p>
       <div class="cta">
-        <a class="btn solid" href="#">Start a round</a>
-        <a class="btn ghost" href="#method">How it works</a>
-      </div>
-      <div class="evlist">
-        <div class="evlabel">Speech events</div>
-        <div class="chips"><span>Prose</span><span>Poetry (POE)</span><span>Program Oral Interpretation (POI)</span><span>Duo Interp</span><span>Dramatic Interp</span><span>Humorous Interp (HI)</span><span>Original Oratory (OO)</span><span>Extemp Speaking</span><span>Informative Speaking</span></div>
-        <div class="evlabel">Debate events</div>
-        <div class="chips"><span>Public Forum (PF)</span><span>Lincoln Douglas (LD)</span><span>Policy Debate (CX)</span><span>Congress</span><span>World Schools / British Parliamentary</span></div>
+        <a class="btn solid" href="signin.html?role=student&amp;mode=signup">Start a round</a>
+        <a class="btn ghost" href="#round">How it works</a>
       </div>
     </div>
 
-    <aside class="card paper" aria-label="Sample round">
-      <span class="tape" aria-hidden="true"></span>
-      <header><span>Round 04</span><span>Parliamentary</span></header>
-      <div class="motion">This house would require every voter to pass a civics exam.</div>
-      <div class="side">
-        <b><span>Proposition — You</span><span>72</span></b>
-        <p>Informed electorates make durable decisions.</p>
-        <div class="meter"><span style="width:72%"></span></div>
+    <div class="showcase">
+      <div class="evbox speech paper">
+        <span class="tape" aria-hidden="true"></span>
+        <h3>Speech events</h3>
+        <div class="chips"><span>Prose</span><span>Poetry (POE)</span><span>Program Oral Interpretation (POI)</span><span>Duo Interp</span><span>Dramatic Interp</span><span>Humorous Interp (HI)</span><span>Original Oratory (OO)</span><span>Extemp Speaking</span><span>Informative Speaking</span></div>
       </div>
-      <div class="side opp">
-        <b><span>Opposition — Rostrum</span><span>68</span></b>
-        <p>Historic exams were instruments of exclusion.</p>
-        <div class="meter"><span style="width:68%"></span></div>
+
+      <aside class="card paper" aria-label="Sample events">
+          <span class="tape" aria-hidden="true"></span>
+          <header><span>Your event</span><span>Any format</span></header>
+          <div class="motion">Whatever you compete in, Flowed coaches it.</div>
+          <div class="side">
+            <b><span>Debate — Public Forum</span><span>72</span></b>
+            <p>Rebuts your case live and scores clash, evidence and structure.</p>
+            <div class="meter"><span style="width:72%"></span></div>
+          </div>
+          <div class="side opp">
+            <b><span>Speech — Original Oratory</span><span>68</span></b>
+            <p>Reviews your delivery, structure and persuasion line by line.</p>
+            <div class="meter"><span style="width:68%"></span></div>
+          </div>
+      </aside>
+
+      <div class="evbox debate paper">
+        <span class="tape r" aria-hidden="true"></span>
+        <h3>Debate events</h3>
+        <div class="chips"><span>Public Forum (PF)</span><span>Lincoln Douglas (LD)</span><span>Policy Debate (CX)</span><span>Congress</span><span>World Schools / British Parliamentary</span></div>
       </div>
-    </aside>
+    </div>
   </section>
 </div>
 
 <!-- The round -->
-<section class="block" id="round">
+<section class="block dark" id="round" data-num="01">
   <div class="wrap round">
     <div>
       <div class="kicker">Inside a round</div>
       <h2>Every rebuttal, <em>graded.</em></h2>
-      <p class="lede">Rostrum listens for the gap in your reasoning, answers it, and marks exactly where the argument gave way, so the next speech is stronger.</p>
+      <p class="lede">Flowed listens for the gap in your reasoning, answers it, and marks exactly where the argument gave way, so the next speech is stronger.</p>
       <div class="timer">
         <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" fill="none" stroke="#E8E4D8" stroke-width="6"/><circle cx="60" cy="60" r="52" fill="none" stroke="#C9A227" stroke-width="6" stroke-linecap="round" stroke-dasharray="327" stroke-dashoffset="104" transform="rotate(-90 60 60)"/><text x="60" y="68" text-anchor="middle" font-family="Cormorant Garamond, serif" font-size="26" fill="#0B0B0C">6:42</text></svg>
         <div><small>Speech timer</small><strong>Constructive · 7:00</strong></div>
@@ -83,7 +95,7 @@
       <div class="deco wash" aria-hidden="true"></div>
       <svg class="deco ring" viewBox="0 0 260 260" aria-hidden="true"><g fill="none" stroke="#6B4423" filter="url(#rough)"><circle cx="130" cy="130" r="90" stroke-width="8" opacity=".5"/><circle cx="140" cy="125" r="70" stroke-width="3" opacity=".6"/></g></svg>
       <div class="bubble"><b>You · Proposition</b>A civics exam <span class="mark">guarantees an informed electorate</span>, which makes better collective decisions.</div>
-      <div class="bubble opp"><b>Rostrum · Opposition</b>That assumes the test measures judgement, not access to schooling. Who writes it, and who gets to retake it?</div>
+      <div class="bubble opp"><b>Flowed · Opposition</b>That assumes the test measures judgement, not access to schooling. Who writes it, and who gets to retake it?</div>
       <div class="hand" aria-hidden="true"><svg viewBox="0 0 30 40" fill="none" stroke="#6B4423" stroke-width="2.2" stroke-linecap="round"><path d="M4 36C4 18 14 8 26 4M26 4l-10 1M26 4l-3 10"/></svg>weak warrant!</div>
     </div>
   </div>
@@ -106,14 +118,14 @@
 <div class="wrap">
   <section class="hero">
     <svg class="deco scribble" viewBox="0 0 190 90" aria-hidden="true"><path pathLength="1" d="M8 70 C40 10 120 5 150 35 S110 85 70 60 S60 15 120 18 S185 50 178 78" fill="none" stroke="#0B0B0C" stroke-width="2.4" stroke-linecap="round"/></svg>
-    <p class="deco hand" aria-hidden="true">Welcome to Round 1!</p>
+    <p class="deco hand" aria-hidden="true">Your move!</p>
 
     <div>
       <div class="kicker">AI debate training</div>
       <h1>Debate an AI that <em>argues back.</em></h1>
       <p class="lede">Take either side of any motion against an opponent that rebuts in real time. When the round ends, get a judge-style breakdown of what worked and what to fix.</p>
       <div class="cta">
-        <a class="btn solid" href="#">Start a round</a>
+        <a class="btn solid" href="signin.html?role=student&amp;mode=signup">Start a round</a>
         <a class="btn ghost" href="#analysis">See a sample debrief</a>
       </div>
       <div class="chips"><span>01 · Spar live</span><span>02 · Review the round</span></div>
@@ -129,7 +141,7 @@
         <div class="meter"><span style="width:72%"></span></div>
       </div>
       <div class="side opp">
-        <b><span>Opposition — Rostrum</span><span>68</span></b>
+        <b><span>Opposition — Flowed</span><span>68</span></b>
         <p>Historic exams were instruments of exclusion.</p>
         <div class="meter"><span style="width:68%"></span></div>
       </div>
@@ -138,12 +150,12 @@
 </div>
 
 <!-- 1 · Debate the AI -->
-<section class="block" id="debate">
-  <div class="wrap round">
+<section class="block dark" id="debate" data-num="01">
+  <div class="wrap round stack">
     <div>
       <div class="kicker">01 · Spar</div>
       <h2>A rival that never <em>tires.</em></h2>
-      <p class="lede">Rostrum takes the other side and answers what you actually said, not a canned line, so every round is a real test.</p>
+      <p class="lede">Flowed takes the other side and answers what you actually said, not a canned line, so every round is a real test.</p>
       <ul class="points">
         <li>Any motion, either side. Sides are drawn, not chosen.</li>
         <li>Rebuts your specific arguments as you make them.</li>
@@ -160,19 +172,19 @@
       <div class="deco wash" aria-hidden="true"></div>
       <svg class="deco ring" viewBox="0 0 260 260" aria-hidden="true"><g fill="none" stroke="#6B4423" filter="url(#rough)"><circle cx="130" cy="130" r="90" stroke-width="8" opacity=".5"/><circle cx="140" cy="125" r="70" stroke-width="3" opacity=".6"/></g></svg>
       <div class="bubble"><b>You · Proposition</b>A civics exam <span class="mark">guarantees an informed electorate</span>, which makes better collective decisions.</div>
-      <div class="bubble opp"><b>Rostrum · Opposition</b>That assumes the test measures judgement, not access to schooling. Who writes it, and who gets to retake it?</div>
+      <div class="bubble opp"><b>Flowed · Opposition</b>That assumes the test measures judgement, not access to schooling. Who writes it, and who gets to retake it?</div>
       <div class="hand" aria-hidden="true"><svg viewBox="0 0 30 40" fill="none" stroke="#6B4423" stroke-width="2.2" stroke-linecap="round"><path d="M4 36C4 18 14 8 26 4M26 4l-10 1M26 4l-3 10"/></svg>weak warrant!</div>
     </div>
   </div>
 </section>
 
 <!-- 2 · Round analysis -->
-<section class="block" id="analysis">
+<section class="block cream" id="analysis" data-num="02">
   <div class="wrap round flip">
     <div>
       <div class="kicker">02 · Review</div>
       <h2>Know exactly <em>what to fix.</em></h2>
-      <p class="lede">After every round Rostrum reads the full transcript and writes your ballot: scores by category, the moments that won points, and the gaps to work on next.</p>
+      <p class="lede">After every round Flowed reads the full transcript and writes your ballot: scores by category, the moments that won points, and the gaps to work on next.</p>
       <ul class="points">
         <li>Notes tied to the exact things you said.</li>
         <li>Scores for clash, evidence, structure and delivery.</li>
@@ -225,9 +237,9 @@
     <div>
       <div class="kicker">Briefs &amp; evidence</div>
       <h1>Walk in with the <em>whole case.</em></h1>
-      <p class="lede">Rostrum writes detailed briefs on any topic and backs every claim with cited evidence, quoted word for word. Research that used to take a weekend takes an afternoon.</p>
+      <p class="lede">Flowed writes detailed briefs on any topic and backs every claim with cited evidence, quoted word for word. Research that used to take a weekend takes an afternoon.</p>
       <div class="cta">
-        <a class="btn solid" href="#">Build a brief</a>
+        <a class="btn solid" href="signin.html?role=student&amp;mode=signup">Build a brief</a>
         <a class="btn ghost" href="#evidence">See an evidence card</a>
       </div>
       <div class="chips"><span>01 · Briefs</span><span>02 · Verbatim evidence</span><span>03 · Research help</span></div>
@@ -249,12 +261,12 @@
 </div>
 
 <!-- 1 · Briefs -->
-<section class="block" id="briefs">
-  <div class="wrap round">
+<section class="block cream" id="briefs" data-num="01">
+  <div class="wrap round stack">
     <div>
       <div class="kicker">01 · Briefs</div>
       <h2>Briefs built like the ones <em>champions carry.</em></h2>
-      <p class="lede">Name a topic and Rostrum assembles the full case file: the framing, both sides, and the answers to the attacks you'll face.</p>
+      <p class="lede">Name a topic and Flowed assembles the full case file: the framing, both sides, and the answers to the attacks you'll face.</p>
       <ul class="points">
         <li>Topic analysis and sourced definitions.</li>
         <li>Pro and con contentions, each with claim, warrant and impact.</li>
@@ -279,12 +291,12 @@
 </section>
 
 <!-- 2 · Evidence -->
-<section class="block" id="evidence">
+<section class="block dark" id="evidence" data-num="02">
   <div class="wrap round flip">
     <div>
       <div class="kicker">02 · Evidence</div>
       <h2>Cited. Verbatim. <em>Unchanged.</em></h2>
-      <p class="lede">Every card quotes its source word for word. Rostrum never rewrites, trims into a new meaning, or paraphrases evidence, so what you read is what the author wrote.</p>
+      <p class="lede">Every card quotes its source word for word. Flowed never rewrites, trims into a new meaning, or paraphrases evidence, so what you read is what the author wrote.</p>
       <ul class="points">
         <li>Full citation: author, credentials, publication and date.</li>
         <li>The exact lines worth reading aloud are highlighted.</li>
@@ -307,16 +319,16 @@
 </section>
 
 <!-- 3 · Research -->
-<section class="block" id="research">
+<section class="block tint" id="research" data-num="03">
   <div class="wrap round">
     <div>
       <div class="kicker">03 · Research</div>
       <h2>A research partner that <em>finds the gaps.</em></h2>
-      <p class="lede">Ask about your exact topic. Rostrum finds the sources, cuts the cards, and shows you where your case is still thin.</p>
+      <p class="lede">Ask about your exact topic. Flowed finds the sources, cuts the cards, and shows you where your case is still thin.</p>
       <div class="stage paper" style="padding:34px 24px 6px;margin-top:26px">
         <span class="tape" aria-hidden="true"></span>
         <div class="bubble"><b>You</b>Find the strongest evidence that civics exams exclude voters.</div>
-        <div class="bubble opp"><b>Rostrum</b>Found 6 sources. Cards are cut verbatim below, ranked by strength.</div>
+        <div class="bubble opp"><b>Flowed</b>Found 6 sources. Cards are cut verbatim below, ranked by strength.</div>
       </div>
     </div>
 
@@ -355,7 +367,7 @@
       <svg class="deco ring" viewBox="0 0 260 260" aria-hidden="true"><g fill="none" stroke="#6B4423" filter="url(#rough)"><circle cx="110" cy="110" r="80" stroke-width="8" opacity=".5"/><circle cx="125" cy="120" r="66" stroke-width="3" opacity=".6"/></g></svg>
       <span class="qmark">“</span>
       <q>If it isn't word for word, <span class="mark">it isn't evidence.</span></q>
-      <span class="hand">— the one rule Rostrum never bends</span>
+      <span class="hand">— the one rule Flowed never bends</span>
     </div>
   </div>
 </section>
@@ -382,7 +394,7 @@
       <h1>Every student. <em>One view.</em></h1>
       <p class="lede">Students get a dashboard for their own practice. Coaches get a dashboard for the whole team, so you can see how everyone is doing and step in when it counts.</p>
       <div class="cta">
-        <a class="btn solid" href="#">Set up a team</a>
+        <a class="btn solid" href="signin.html?role=coach&amp;mode=signup">Set up a team</a>
         <a class="btn ghost" href="#student-view">See the dashboards</a>
       </div>
       <div class="chips"><span>Student dashboard</span><span>Coach dashboard</span></div>
@@ -401,7 +413,7 @@
 </div>
 
 <!-- 1 · Student dashboard -->
-<section class="block" id="student-view">
+<section class="block tint" id="student-view" data-num="01">
   <div class="wrap round">
     <div>
       <div class="kicker">01 · Students</div>
@@ -441,7 +453,7 @@
 </section>
 
 <!-- 2 · Coach dashboard -->
-<section class="block" id="coach-view">
+<section class="block dark" id="coach-view" data-num="02">
   <div class="wrap round flip">
     <div>
       <div class="kicker">02 · Coaches</div>
@@ -491,6 +503,93 @@
   </div>
 </section>
 
+<!-- Ticker -->
+<div class="ticker" aria-hidden="true">
+  <div class="track">
+    <span>Spar</span><span>Review</span><span>Research</span><span>Coach</span><span>Compete</span><span>Improve</span>
+    <span>Spar</span><span>Review</span><span>Research</span><span>Coach</span><span>Compete</span><span>Improve</span>
+  </div>
+</div>
+</div>
+
+<div class="page" id="pricing">
+<div class="wrap">
+  <section class="hero">
+    <svg class="deco scribble" viewBox="0 0 190 90" aria-hidden="true"><path pathLength="1" d="M8 70 C40 10 120 5 150 35 S110 85 70 60 S60 15 120 18 S185 50 178 78" fill="none" stroke="#0B0B0C" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <p class="deco hand" aria-hidden="true">Start free!</p>
+
+    <div>
+      <div class="kicker">Pricing</div>
+      <h1>Simple plans for <em>every competitor.</em></h1>
+      <p class="lede">Whether you compete alone or coach a whole program, there is a plan that fits. Every plan works for every speech and debate event.</p>
+      <div class="cta">
+        <a class="btn solid" href="signin.html?role=student&amp;mode=signup">Start free</a>
+        <a class="btn ghost" href="#plans">Compare plans</a>
+      </div>
+      <div class="chips"><span>No credit card to start</span><span>Cancel anytime</span></div>
+    </div>
+
+    <aside class="card paper" aria-label="What every plan includes">
+      <span class="tape" aria-hidden="true"></span>
+      <header><span>Every plan</span><span>Pricing</span></header>
+      <div class="motion">Every event. Every level. One clear price list.</div>
+      <ul class="incl"><li>Every speech and debate event</li><li>AI sparring and judge-style ballots</li><li>Cited, verbatim evidence</li></ul>
+    </aside>
+  </section>
+</div>
+
+<section class="block cream" id="plans" data-num="01">
+  <div class="wrap">
+    <div class="kicker">Choose a plan</div>
+    <h2>Pick the one that <em>fits your season.</em></h2>
+    <div class="plans">
+      <div class="plan paper">
+        <h3>Student</h3>
+        <div class="price"><strong>Free</strong><span></span></div>
+        <p>For trying your first rounds.</p>
+        <ul class="incl"><li>3 practice rounds a month</li><li>Any speech or debate event</li><li>Basic ballot feedback</li></ul>
+        <a class="btn ghost" href="signin.html?role=student&amp;mode=signup">Start free</a>
+      </div>
+      <div class="plan paper featured"><span class="tape" aria-hidden="true"></span>
+        <span class="ribbon">Most popular</span><h3>Competitor</h3>
+        <div class="price"><strong>$12</strong><span>/ month</span></div>
+        <p>For anyone training toward a tournament.</p>
+        <ul class="incl"><li>Unlimited practice rounds</li><li>Full briefs and verbatim evidence cards</li><li>Score trends and every past ballot</li><li>Research partner that finds the gaps</li></ul>
+        <a class="btn solid" href="signin.html?role=student&amp;mode=signup">Go Competitor</a>
+      </div>
+      <div class="plan paper">
+        <h3>Team</h3>
+        <div class="price"><strong>$9</strong><span>/ student / month</span></div>
+        <p>For coaches and whole programs.</p>
+        <ul class="incl"><li>Everything in Competitor</li><li>Coach dashboard for the full roster</li><li>Assign drills and topics</li><li>Flags for students who go quiet</li></ul>
+        <a class="btn ghost" href="signin.html?role=coach&amp;mode=signup">Set up a team</a>
+      </div>
+    </div>
+    <p class="fineprint">Illustrative pricing. Final plans will be announced at launch.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="kicker">Getting started</div>
+    <h2>From free to <em>tournament-ready.</em></h2>
+    <div class="method">
+      <div class="step lined"><span class="num">I</span><h3>Start free</h3><p>Create an account and run your first rounds in any event.</p></div>
+      <div class="step lined"><span class="num">II</span><h3>Train harder</h3><p>Move to Competitor for unlimited rounds, briefs and evidence cards.</p></div>
+      <div class="step lined"><span class="num">III</span><h3>Bring the team</h3><p>Coaches add a team plan and watch every student's progress.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Ticker -->
+<div class="ticker" aria-hidden="true">
+  <div class="track">
+    <span>Start free</span><span>Every event</span><span>Every level</span><span>Cancel anytime</span><span>Bring your team</span>
+    <span>Start free</span><span>Every event</span><span>Every level</span><span>Cancel anytime</span><span>Bring your team</span>
+  </div>
+</div>
+</div>
+
 <!-- Closing -->
 <section class="close">
   <div class="wrap">
@@ -498,22 +597,23 @@
       <div class="kicker">Your turn</div>
       <h2>Take the <em>floor.</em></h2>
       <p>Debate the AI, build your case, and bring your coach along. Your first round takes ten minutes.</p>
-      <div class="cta"><a class="btn solid" href="#">Start a round</a><a class="btn ghost" href="#">Set up a team</a></div>
+      <div class="cta"><a class="btn solid" href="signin.html?role=student&amp;mode=signup">Start a round</a><a class="btn ghost" href="signin.html?role=coach&amp;mode=signup">Set up a team</a></div>
     </div>
     <svg class="gavel" viewBox="0 0 220 220" fill="none" stroke="#C9A227" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
       <g transform="rotate(-32 110 90)"><rect x="52" y="44" width="116" height="52" rx="8"/><path d="M82 44v52M138 44v52" stroke-width="2"/><rect x="100" y="96" width="20" height="104" rx="9"/></g>
       <ellipse cx="150" cy="205" rx="52" ry="9"/>
     </svg>
   </div>
-  <p class="fine"><b>Rostrum</b> &nbsp;·&nbsp; Train the argument</p>
+  <p class="fine"><b>Flowed</b> &nbsp;·&nbsp; Train the argument</p>
 </section>
-</div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="rough"><feTurbulence baseFrequency=".03" numOctaves="3" seed="2"/><feDisplacementMap in="SourceGraphic" scale="9"/></filter></defs></svg>
 
+<script src="motion.js"></script>
+
 <script>
   const links = document.querySelectorAll('#tabs a[data-tab]');
-  const pages = ['home', 'how', 'page-briefs', 'coaches'].map(id => document.getElementById(id));
+  const pages = ['home', 'how', 'page-briefs', 'coaches', 'pricing'].map(id => document.getElementById(id));
   function mark() {
     let cur = 'home';
     pages.forEach(p => { if (p.getBoundingClientRect().top <= 140) cur = p.id; });

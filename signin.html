@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in — Flowed</title>
+<script>try{if(sessionStorage.getItem("flowed.intro")){document.documentElement.classList.add("seen")}else{sessionStorage.setItem("flowed.intro","1")}}catch(e){document.documentElement.classList.add("seen")}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="auth.css">
+</head>
+<body class="authpage">
+
+<div class="bar-wrap">
+  <div class="bar">
+    <a class="brand" href="index.html#home" aria-label="Flowed home">
+      <svg class="wordmark" viewBox="0 0 100 40" aria-hidden="true"><text x="0" y="30">Flowed</text></svg>
+    </a>
+    <nav>
+      <a href="index.html#home">Home</a>
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#page-briefs">Briefs</a>
+      <a href="index.html#coaches">Coaches</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="about.html">About Us</a>
+      <a href="signin.html" aria-current="page">Sign in</a>
+    </nav>
+  </div>
+</div>
+
+<main class="auth" id="auth" data-role="student">
+  <section class="auth-side" aria-label="Why Flowed">
+    <div class="side-inner">
+      <div class="kicker">Flowed</div>
+      <h1 id="sideH1">Practice like it is <em>round one.</em></h1>
+      <p class="lede" id="sideLede"></p>
+      <ul class="points" id="sidePoints"></ul>
+      <p class="hand" aria-hidden="true">Win the room before you enter it.</p>
+    </div>
+  </section>
+
+  <section class="auth-main">
+    <div class="auth-card paper">
+      <span class="tape" aria-hidden="true"></span>
+
+      <div class="roles" role="tablist" aria-label="Account type">
+        <button type="button" role="tab" data-role="student" aria-selected="true">Student</button>
+        <button type="button" role="tab" data-role="coach" aria-selected="false" tabindex="-1">Coach</button>
+      </div>
+
+      <h2 id="formTitle">Student sign in</h2>
+      <p class="sub" id="formSub"></p>
+
+      <form id="authForm" novalidate>
+        <div class="field" hidden>
+          <label for="name">Full name</label>
+          <input id="name" name="name" type="text" autocomplete="name" placeholder="Maya Johnson">
+          <p class="err" aria-live="polite"></p>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="you@school.org" required>
+          <p class="err" aria-live="polite"></p>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="pw">
+            <input id="password" name="password" type="password" autocomplete="current-password" required>
+            <button type="button" id="togglePw" aria-pressed="false">Show</button>
+          </div>
+          <p class="hint" id="pwHint" hidden>At least 8 characters, with a letter and a number.</p>
+          <p class="err" aria-live="polite"></p>
+        </div>
+
+        <div class="field" hidden>
+          <label for="extra">Coach invite code</label>
+          <input id="extra" name="extra" type="text" placeholder="ABC123">
+          <p class="err" aria-live="polite"></p>
+        </div>
+
+        <label class="check"><input type="checkbox" id="remember" checked> Keep me signed in on this device</label>
+
+        <p class="formerr" id="formErr" role="alert"></p>
+        <button class="btn solid wide" type="submit" id="submitBtn">Sign in</button>
+      </form>
+
+      <p class="switch"><span id="switchText">New to Flowed?</span> <button type="button" class="link" id="switchMode">Create an account</button></p>
+      <p class="demo-note">Demo mode: accounts are saved in this browser only.</p>
+    </div>
+  </section>
+</main>
+
+<script src="auth.js"></script>
+<script src="signin.js"></script>
+</body>
+</html>

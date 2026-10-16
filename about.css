@@ -1,0 +1,78 @@
+/* About page: an editorial layout, deliberately unlike the rest of the site */
+.aboutpage { --accent: #D98A00; background: #fff; }
+.eyebrow { font-size: .74rem; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--gold-deep); }
+.eyebrow.light { color: var(--gold); }
+
+/* Masthead: full-bleed navy, oversized headline, index at the foot */
+.mast {
+  background: radial-gradient(800px 420px at 85% -10%, rgba(217,138,0,.22), transparent 65%), radial-gradient(rgba(255,255,255,.06) 1px, transparent 1.5px) 0 0 / 24px 24px, var(--navy);
+  color: #fff; padding: clamp(72px, 10vw, 140px) 0 clamp(40px, 5vw, 64px);
+}
+.mast .eyebrow { color: var(--gold); }
+.mast h1 { color: #fff; font-size: clamp(2.8rem, 8vw, 6.6rem); line-height: .98; max-width: 15ch; margin: 22px 0 0; }
+.mast h1::after { display: none; }
+.mast h1 em { color: var(--gold); }
+.mast-foot { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap; margin-top: clamp(40px, 6vw, 72px); padding-top: 28px; border-top: 1px solid rgba(255,255,255,.22); }
+.mast-foot p { max-width: 36rem; color: #C9D1E6; font-size: 1.1rem; }
+.mast-index { list-style: none; padding: 0; display: flex; gap: 8px; flex-wrap: wrap; }
+.mast-index a { display: inline-block; padding: 8px 16px; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; font-size: .74rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #fff; transition: background .2s, color .2s, border-color .2s; }
+.mast-index a:hover { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+
+/* Manifesto: sticky label beside long-form copy */
+.manifesto { padding: clamp(72px, 9vw, 130px) 0; }
+.manifesto .grid { display: grid; grid-template-columns: 220px 1fr; gap: clamp(32px, 6vw, 96px); align-items: start; }
+.manifesto .label { position: sticky; top: 110px; }
+.manifesto .label span { display: inline-block; padding-top: 14px; border-top: 3px solid var(--accent); font-size: .78rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--navy); }
+.manifesto .copy { max-width: 46rem; }
+.manifesto .big { font-family: var(--serif); font-size: clamp(1.8rem, 3.4vw, 2.7rem); line-height: 1.18; color: var(--navy); margin-bottom: 28px; text-wrap: balance; }
+.manifesto .copy p + p { margin-top: 18px; font-size: 1.05rem; line-height: 1.75; }
+
+/* Beliefs: ruled editorial list on cream */
+.beliefs { background: var(--cream); padding: clamp(72px, 9vw, 120px) 0; border-block: 1px solid var(--rule); }
+.beliefs .eyebrow { color: var(--gold-deep); }
+.beliefs ol { list-style: none; padding: 0; margin: 28px 0 0; }
+.beliefs li { display: grid; grid-template-columns: 110px 1fr 1.1fr; gap: clamp(16px, 4vw, 56px); align-items: baseline; padding: clamp(26px, 3.4vw, 42px) 0; border-top: 1.5px solid var(--navy); transition: background .25s; }
+.beliefs li:last-child { border-bottom: 1.5px solid var(--navy); }
+.beliefs li:hover { background: rgba(217,138,0,.07); }
+.beliefs .n { font-family: var(--serif); font-size: clamp(2.4rem, 4vw, 3.4rem); font-style: italic; color: var(--accent); line-height: 1; }
+.beliefs h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); margin: 0; }
+.beliefs h2::after { display: none; }
+.beliefs p { font-size: 1.02rem; line-height: 1.7; }
+
+/* Promise: two contrasting notecards */
+.promise { padding: clamp(72px, 9vw, 130px) 0; }
+.promise h2 { max-width: 20ch; margin: 18px 0 0; }
+.promise h2::after { display: none; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 56px); margin-top: 52px; }
+.pledge { position: relative; padding: 44px clamp(22px, 3.5vw, 40px) 36px; border-radius: var(--radius); }
+.pledge h3 { font-size: 2rem; margin: 0 0 18px; }
+.pledge ul { list-style: none; padding: 0; display: grid; gap: 14px; }
+.pledge li { position: relative; padding-left: 32px; font-size: 1.02rem; color: var(--ink); }
+.pledge li::before { position: absolute; left: 0; top: .05em; font-weight: 700; font-size: 1.1rem; }
+.pledge.yes { background: #ECF8F3; transform: rotate(-.8deg); }
+.pledge.yes li::before { content: "✓"; color: var(--teal); }
+.pledge.yes .tape { --tp: rgba(22,138,118,.85); --tpat: var(--dots); }
+.pledge.no { background: #FFF0EA; transform: rotate(.8deg); }
+.pledge.no li::before { content: "✕"; color: #C0392B; }
+.pledge.no .tape { --tp: rgba(228,87,46,.85); --tpat: var(--stripe); }
+.pledge { transition: transform .35s var(--ease); }
+.pledge:hover { transform: rotate(0) translateY(-4px); }
+
+/* Closing band */
+.band { background: var(--gold); padding: clamp(56px, 7vw, 96px) 0; }
+.band .wrap { display: flex; justify-content: space-between; align-items: center; gap: 32px; flex-wrap: wrap; }
+.band p { font-family: var(--serif); font-size: clamp(1.9rem, 4vw, 3.2rem); line-height: 1.1; font-style: italic; color: var(--navy); max-width: 24ch; }
+.band-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+.band .btn.ghost { color: var(--navy); border-color: var(--navy); }
+.band .btn.ghost:hover { background: var(--navy); color: #fff; }
+.foot { background: var(--navy); color: #8f98b3; text-align: center; padding: 30px 0; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; }
+.foot b { color: var(--gold); font-weight: 500; }
+
+@media (max-width: 860px) {
+  .manifesto .grid { grid-template-columns: 1fr; gap: 24px; }
+  .manifesto .label { position: static; }
+  .beliefs li { grid-template-columns: 70px 1fr; }
+  .beliefs li p { grid-column: 2; }
+  .pair { grid-template-columns: 1fr; }
+  .pledge.yes, .pledge.no { transform: none; }
+}
