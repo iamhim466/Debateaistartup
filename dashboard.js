@@ -78,17 +78,17 @@
     scores: [62, 66, 65, 70, 72, 74, 79, 82],
     skills: [['Clash', 78], ['Evidence', 64], ['Structure', 82], ['Delivery', 71]],
     ballots: [
-      ['This house would require every voter to pass a civics exam', 'Parliamentary', 82, 'Oct 14'],
-      ['This house believes social media does more harm than good', 'Public Forum', 79, 'Oct 12'],
-      ['This house would ban private jets', 'Lincoln Douglas', 74, 'Oct 9'],
-      ['This house regrets the rise of remote work', 'Parliamentary', 72, 'Oct 6']
+      ['This house would require every voter to pass a civics exam', 'Parliamentary', 82, 'Oct 14', 'World Schools / British Parliamentary'],
+      ['This house believes social media does more harm than good', 'Public Forum', 79, 'Oct 12', 'Public Forum (PF)'],
+      ['This house would ban private jets', 'Lincoln Douglas', 74, 'Oct 9', 'Lincoln Douglas (LD)'],
+      ['This house regrets the rise of remote work', 'Parliamentary', 72, 'Oct 6', 'World Schools / British Parliamentary']
     ],
     assignments: [
-      ['Evidence drills: citing sources', 'Due Friday', 'Assigned'],
-      ['Rebuttal speed: 3 timed rounds', 'Due next Tuesday', 'In progress'],
-      ['Read the brief: civics exam motion', 'Completed Oct 10', 'Done']
+      ['Evidence drills: citing sources', 'Due Friday', 'Assigned', 'Public Forum (PF)'],
+      ['Rebuttal speed: 3 timed rounds', 'Due next Tuesday', 'In progress', 'Lincoln Douglas (LD)'],
+      ['Read the brief: civics exam motion', 'Completed Oct 10', 'Done', 'World Schools / British Parliamentary']
     ],
-    briefs: [['Civics exam motion', 'Pro & Con brief'], ['Social media and harm', 'Brief + 9 evidence cards'], ['Private jets ban', 'Brief']]
+    briefs: [['Civics exam motion', 'Pro & Con brief', 'World Schools / British Parliamentary'], ['Social media and harm', 'Brief + 9 evidence cards', 'Public Forum (PF)'], ['Private jets ban', 'Brief', 'Lincoln Douglas (LD)']]
   };
   var EMPTY_STUDENT = { rounds: '0', avg: '—', streak: '0', best: '—', scores: [], skills: [['Clash', null], ['Evidence', null], ['Structure', null], ['Delivery', null]], ballots: [], assignments: [], briefs: [] };
 
@@ -180,7 +180,7 @@
   var nav = document.getElementById('dnav');
   (isCoach
     ? [['Overview', 'top'], ['Roster', 'sec-roster'], ['Team skills', 'sec-skills'], ['Activity', 'sec-activity'], ['Assign work', 'sec-assign']]
-    : [['Overview', 'top'], ['Progress', 'sec-progress'], ['Ballots', 'sec-ballots'], ['Assignments', 'sec-assign'], ['Briefs', 'sec-briefs']]
+    : [['Overview', 'top'], ['Progress', 'sec-progress']]
   ).forEach(function (l, i) {
     var a = el('a', null, l[0]); a.href = '#' + l[1];
     if (i === 0) a.setAttribute('aria-current', 'true');
@@ -225,50 +225,12 @@
     if (!demo) sk.body.appendChild(empty('Scores fill in after your first ballot.'));
     grid.appendChild(sk);
 
-    var bl = panel('sec-ballots', 'Recent ballots', 'Judge-style feedback', 'span2');
-    if (S.ballots.length) {
-      var ul = el('ul', 'rows');
-      S.ballots.forEach(function (b) {
-        var li = el('li'); var info = el('div');
-        add(info, el('strong', null, b[0]), el('span', null, b[1] + ' · ' + b[3]));
-        add(li, info, el('em', 'score', String(b[2])));
-        ul.appendChild(li);
-      });
-      bl.body.appendChild(ul);
-    } else bl.body.appendChild(empty('Your ballots will be listed here, each with scores and notes.'));
-    grid.appendChild(bl);
-
-    var as = panel('sec-assign', 'From your coach', 'Assignments');
-    if (S.assignments.length) {
-      var ul2 = el('ul', 'rows');
-      S.assignments.forEach(function (a) {
-        var li = el('li'); var info = el('div');
-        add(info, el('strong', null, a[0]), el('span', null, a[1]));
-        add(li, info, pill(a[2], a[2] === 'Done' ? 'green' : a[2] === 'In progress' ? 'amber' : 'blue'));
-        ul2.appendChild(li);
-      });
-      as.body.appendChild(ul2);
-    } else as.body.appendChild(empty(user.coachCode ? 'No assignments yet.' : 'Join a team with a coach invite code to receive assignments.'));
-    grid.appendChild(as);
-
     var qs = panel('sec-start', 'Quick start', 'Pick your event');
     var chips = el('div', 'chipset');
     ['Public Forum', 'Lincoln Douglas', 'Policy', 'Congress', 'Extemp', 'Original Oratory', 'Duo Interp'].forEach(function (c) { var a = el('a', null, c); a.href = 'index.html#home'; chips.appendChild(a); });
     qs.body.appendChild(chips);
     grid.appendChild(qs);
 
-    var br = panel('sec-briefs', 'Library', 'Briefs & evidence', 'span2');
-    if (S.briefs.length) {
-      var ul3 = el('ul', 'rows');
-      S.briefs.forEach(function (b) {
-        var li = el('li'); var info = el('div');
-        add(info, el('strong', null, b[0]), el('span', null, b[1]));
-        add(li, info, el('span', 'open', 'Open'));
-        ul3.appendChild(li);
-      });
-      br.body.appendChild(ul3);
-    } else br.body.appendChild(empty('Briefs and evidence cards you build will be saved here.'));
-    grid.appendChild(br);
   }
 
   /* ---------- student event tabs + views ---------- */
@@ -301,8 +263,45 @@
       pr.body.appendChild(demo ? lineChart([64, 68, 71, 74, 79, 84]) : empty('Run two ' + name + ' rounds and your trend will appear here.'));
       gr.appendChild(pr);
       var sk = panel('ev-skills', 'Skills', 'Where you stand'); sk.body.appendChild(skills(demo ? SAMPLE_STUDENT.skills : EMPTY_STUDENT.skills)); gr.appendChild(sk);
-      var bl = panel('ev-ballots', 'Recent ballots', 'Feedback for ' + name, 'span2'); bl.body.appendChild(empty('Ballots from your ' + name + ' rounds will be listed here.')); gr.appendChild(bl);
-      var br = panel('ev-briefs', 'Library', 'Prep for ' + name); br.body.appendChild(empty('Briefs and evidence you build for ' + name + ' will be saved here.')); gr.appendChild(br);
+      function forEvent(list) { return demo ? list.filter(function (x) { return x[x.length - 1] === name; }) : []; }
+      var bl = panel('ev-ballots', 'Recent ballots', 'Feedback for ' + name, 'span2');
+      var ballots = forEvent(SAMPLE_STUDENT.ballots);
+      if (ballots.length) {
+        var ulb = el('ul', 'rows');
+        ballots.forEach(function (b) {
+          var li = el('li'); var info = el('div');
+          add(info, el('strong', null, b[0]), el('span', null, b[3]));
+          add(li, info, el('em', 'score', String(b[2]))); ulb.appendChild(li);
+        });
+        bl.body.appendChild(ulb);
+      } else bl.body.appendChild(empty('Ballots from your ' + name + ' rounds will be listed here, each with scores and notes.'));
+      gr.appendChild(bl);
+
+      var asg = panel('ev-assign', 'From your coach', 'Assignments for ' + name);
+      var tasks = forEvent(SAMPLE_STUDENT.assignments);
+      if (tasks.length) {
+        var ula = el('ul', 'rows');
+        tasks.forEach(function (a) {
+          var li = el('li'); var info = el('div');
+          add(info, el('strong', null, a[0]), el('span', null, a[1]));
+          add(li, info, pill(a[2], a[2] === 'Done' ? 'green' : a[2] === 'In progress' ? 'amber' : 'blue')); ula.appendChild(li);
+        });
+        asg.body.appendChild(ula);
+      } else asg.body.appendChild(empty(user.coachCode || demo ? 'No ' + name + ' assignments yet.' : 'Join a team with a coach invite code to receive assignments.'));
+      gr.appendChild(asg);
+
+      var br = panel('ev-briefs', 'Library', 'Briefs & evidence for ' + name, 'span2');
+      var briefs = forEvent(SAMPLE_STUDENT.briefs);
+      if (briefs.length) {
+        var ulr = el('ul', 'rows');
+        briefs.forEach(function (b) {
+          var li = el('li'); var info = el('div');
+          add(info, el('strong', null, b[0]), el('span', null, b[1]));
+          add(li, info, el('span', 'open', 'Open')); ulr.appendChild(li);
+        });
+        br.body.appendChild(ulr);
+      } else br.body.appendChild(empty('Briefs and evidence you build for ' + name + ' will be saved here.'));
+      gr.appendChild(br);
     }
 
     function route() {
