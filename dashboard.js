@@ -118,6 +118,55 @@
 
   var linked = Auth.users().filter(function (u) { return u.role === 'student' && isCoach && u.coachCode === user.code; });
 
+  /* ---------- events (same list as the home page) ---------- */
+  var EVENT_GROUPS = [
+    ['Speech events', ['Prose', 'Poetry (POE)', 'Program Oral Interpretation (POI)', 'Duo Interp', 'Dramatic Interp', 'Humorous Interp (HI)', 'Original Oratory (OO)', 'Extemp Speaking', 'Informative Speaking']],
+    ['Debate events', ['Public Forum (PF)', 'Lincoln Douglas (LD)', 'Policy Debate (CX)', 'Congress', 'World Schools / British Parliamentary']]
+  ];
+  function slug(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+  var myEvents = !isCoach && Array.isArray(user.events) ? user.events : [];
+
+  // Startup screen: shown at every student sign-in, with earlier picks preselected.
+  function showEventPicker(preselected, onDone, onCancel) {
+    var chosen = {}; preselected.forEach(function (e) { chosen[e] = true; });
+    var ov = el('div', 'evpick'); ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-labelledby', 'evTitle');
+    var card = el('div', 'evcard paper');
+    var title = el('h2', null, 'Which events do you compete in?'); title.id = 'evTitle';
+    add(card, el('div', 'kicker', 'Welcome, ' + user.name.split(/\s+/)[0]), title,
+      el('p', 'lede', 'Pick every event you are practicing. Each one gets its own tab in your profile, and you can change this any time.'));
+    var count = el('span', 'evcount');
+    var go = el('button', 'btn solid', 'Continue'); go.type = 'button';
+    function sync() {
+      var n = Object.keys(chosen).length;
+      count.textContent = n ? n + ' selected' : 'Choose at least one';
+      go.disabled = !n;
+    }
+    EVENT_GROUPS.forEach(function (g) {
+      var sec = el('div', 'evgroup'); sec.appendChild(el('h3', null, g[0]));
+      var row = el('div', 'evgrid');
+      g[1].forEach(function (name) {
+        var b = el('button', 'evopt', name); b.type = 'button';
+        b.setAttribute('aria-pressed', chosen[name] ? 'true' : 'false');
+        b.addEventListener('click', function () {
+          if (chosen[name]) delete chosen[name]; else chosen[name] = true;
+          b.setAttribute('aria-pressed', chosen[name] ? 'true' : 'false'); sync();
+        });
+        row.appendChild(b);
+      });
+      sec.appendChild(row); card.appendChild(sec);
+    });
+    var foot = el('div', 'evfoot'); add(foot, count);
+    if (onCancel) { var cx = el('button', 'btn ghost', 'Cancel'); cx.type = 'button'; cx.addEventListener('click', function () { ov.remove(); document.body.classList.remove('evlock'); onCancel(); }); foot.appendChild(cx); }
+    go.addEventListener('click', function () {
+      var list = []; EVENT_GROUPS.forEach(function (g) { g[1].forEach(function (n) { if (chosen[n]) list.push(n); }); });
+      if (Auth.saveEvents(list)) onDone(list); else count.textContent = 'Could not save. Check that site storage is enabled.';
+    });
+    foot.appendChild(go); card.appendChild(foot); ov.appendChild(card);
+    document.body.classList.add('evlock'); document.body.appendChild(ov);
+    sync(); go.focus();
+  }
+  if (!isCoach && Auth.needsEventPick()) showEventPicker(myEvents, function () { location.reload(); });
+
   /* ---------- sidebar ---------- */
   document.getElementById('dash').dataset.role = user.role;
   document.getElementById('avatar').textContent = initials(user.name);
@@ -220,6 +269,57 @@
       br.body.appendChild(ul3);
     } else br.body.appendChild(empty('Briefs and evidence cards you build will be saved here.'));
     grid.appendChild(br);
+  }
+
+  /* ---------- student event tabs + views ---------- */
+  if (!isCoach) {
+    var evView = el('div'); evView.id = 'eventView'; evView.hidden = true;
+    body.parentNode.appendChild(evView);
+
+    nav.appendChild(el('p', 'dnav-label', 'My events'));
+    var evTabs = {};
+    myEvents.forEach(function (name) {
+      var a = el('a', 'evtab', name); a.href = '#event-' + slug(name); evTabs[slug(name)] = a; nav.appendChild(a);
+    });
+    if (!myEvents.length) nav.appendChild(el('p', 'dnav-empty', 'No events chosen yet.'));
+    var change = el('button', 'dnav-change', myEvents.length ? 'Change events' : 'Choose events'); change.type = 'button';
+    change.addEventListener('click', function () { showEventPicker(myEvents, function () { location.reload(); }, function () {}); });
+    nav.appendChild(change);
+
+    function renderEvent(name) {
+      evView.textContent = '';
+      var hd = el('header', 'dhead'); var t = el('div');
+      add(t, el('div', 'kicker', EVENT_GROUPS[0][1].indexOf(name) >= 0 ? 'Speech event' : 'Debate event'), el('h1', null, name),
+        el('p', 'lede', 'Everything for ' + name + ' in one place: practice, feedback and your prep.'));
+      var act = el('div', 'dactions'); var go = el('a', 'btn solid', 'Start a round'); go.href = 'index.html#home'; act.appendChild(go);
+      add(hd, t, act); evView.appendChild(hd);
+      var tl = el('div', 'dtiles');
+      add(tl, tile(demo ? '6' : '0', 'Rounds', 't1'), tile(demo ? '76' : '—', 'Average score', 't2'), tile(demo ? '2' : '0', 'Day streak', 't3'), tile(demo ? '84' : '—', 'Best round', 't4'));
+      evView.appendChild(tl);
+      var gr = el('div', 'dgrid'); evView.appendChild(gr);
+      var pr = panel('ev-progress', 'Progress', 'Your ' + name + ' scores', 'span2');
+      pr.body.appendChild(demo ? lineChart([64, 68, 71, 74, 79, 84]) : empty('Run two ' + name + ' rounds and your trend will appear here.'));
+      gr.appendChild(pr);
+      var sk = panel('ev-skills', 'Skills', 'Where you stand'); sk.body.appendChild(skills(demo ? SAMPLE_STUDENT.skills : EMPTY_STUDENT.skills)); gr.appendChild(sk);
+      var bl = panel('ev-ballots', 'Recent ballots', 'Feedback for ' + name, 'span2'); bl.body.appendChild(empty('Ballots from your ' + name + ' rounds will be listed here.')); gr.appendChild(bl);
+      var br = panel('ev-briefs', 'Library', 'Prep for ' + name); br.body.appendChild(empty('Briefs and evidence you build for ' + name + ' will be saved here.')); gr.appendChild(br);
+    }
+
+    function route() {
+      var m = /^#event-(.+)$/.exec(location.hash), name = null;
+      if (m) myEvents.forEach(function (n) { if (slug(n) === m[1]) name = n; });
+      body.hidden = !!name; evView.hidden = !name;
+      if (name) { renderEvent(name); window.scrollTo(0, 0); }
+      Array.prototype.forEach.call(nav.querySelectorAll('a'), function (a) { a.removeAttribute('aria-current'); });
+      var cur = name ? evTabs[slug(name)] : nav.querySelector('a:not(.evtab)');
+      if (cur) cur.setAttribute('aria-current', 'true');
+    }
+    addEventListener('hashchange', route);
+    route();
+
+    // Quick start lists the events this student chose.
+    var qsc = document.querySelector('#sec-start .chipset');
+    if (qsc && myEvents.length) { qsc.textContent = ''; myEvents.forEach(function (n) { var a = el('a', null, n); a.href = '#event-' + slug(n); qsc.appendChild(a); }); }
   }
 
   /* ---------- coach ---------- */

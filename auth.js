@@ -47,7 +47,7 @@
   }
 
   function startSession(user, remember) {
-    var data = { email: user.email, role: user.role, at: Date.now() };
+    var data = { email: user.email, role: user.role, at: Date.now(), picked: false };
     sessionStorage.removeItem(SESSION);
     localStorage.removeItem(SESSION);
     write(remember ? localStorage : sessionStorage, SESSION, data);
@@ -63,15 +63,37 @@
   }
   function startDemo(role) {
     try { localStorage.removeItem(SESSION); } catch (e) {}
-    write(sessionStorage, SESSION, { demo: true, role: role, at: Date.now() });
+    write(sessionStorage, SESSION, { demo: true, role: role, at: Date.now(), picked: false });
   }
 
   function currentUser() {
     var s = read(sessionStorage, SESSION, null) || read(localStorage, SESSION, null);
     if (!s) return null;
-    if (s.demo) return demoUser(s.role === 'coach' ? 'coach' : 'student');
+    if (s.demo) { var d = demoUser(s.role === 'coach' ? 'coach' : 'student'); d.events = s.events || null; return d; }
     var u = findByEmail(s.email);
     return u && u.role === s.role ? u : null;
+  }
+
+  // Event choice. Each sign-in starts with picked:false so the student confirms
+  // their events on the startup screen; the saved list is preselected next time.
+  function sessionStore() {
+    return read(sessionStorage, SESSION, null) ? sessionStorage : (read(localStorage, SESSION, null) ? localStorage : null);
+  }
+  function needsEventPick() {
+    var st = sessionStore(); var s = st && read(st, SESSION, null);
+    return !!s && s.picked !== true && s.role === 'student';
+  }
+  function saveEvents(events) {
+    var st = sessionStore(); if (!st) return false;
+    var s = read(st, SESSION, null);
+    s.picked = true;
+    if (s.demo) s.events = events;
+    else {
+      var list = users();
+      list.forEach(function (u) { if (u.email === s.email) u.events = events; });
+      if (!saveUsers(list)) return false;
+    }
+    return write(st, SESSION, s);
   }
 
   function signOut() {
@@ -115,6 +137,6 @@
   }
 
   window.FlowedAuth = {
-    users: users, currentUser: currentUser, startDemo: startDemo, signOut: signOut, signUp: signUp, signIn: signIn, findByEmail: findByEmail
+    users: users, currentUser: currentUser, startDemo: startDemo, needsEventPick: needsEventPick, saveEvents: saveEvents, signOut: signOut, signUp: signUp, signIn: signIn, findByEmail: findByEmail
   };
 })();
